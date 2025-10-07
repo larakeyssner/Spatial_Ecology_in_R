@@ -6,3 +6,5 @@ Course is based on:
 + ecology
 + geography
 + remote sensing 
+
+A link [here](https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2025/535506)
