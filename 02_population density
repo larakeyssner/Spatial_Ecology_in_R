@@ -1,0 +1,23 @@
+#code for estimation population ecology
+
+#package for point pattern analysis 
+install.packages("spatstat")
+library(spatstat)
+
+#data used is bei already in the package 
+bei
+plot(bei, pch=16, col ="black", cex=.5)
+
+bei.extra
+plot(bei.extra$elev) #to select only one of the variables 
+plot(bei.extra[[1]]) #to only plot the first plot with double brackets needed 
+
+elevation <- bei.extra$elev
+plot(elevation)
+
+densitymap <- density(bei)
+plot(densitymap)
+points(bei, cex=.2)
+
+#opposite of the elevation and density visible in the maps 
+#with point function the points can be added in the map 
