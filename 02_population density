@@ -8,6 +8,7 @@ library(spatstat)
 bei
 plot(bei, pch=16, col ="black", cex=.5)
 
+#two maps inside the data set one elevation and gradient
 bei.extra
 plot(bei.extra$elev) #to select only one of the variables 
 plot(bei.extra[[1]]) #to only plot the first plot with double brackets needed 
@@ -25,23 +26,29 @@ points(bei, cex=.2)
 #opposite of the elevation and density visible in the maps 
 #with point function the points can be added in the map 
 
-# Plotting the maps one beside the other
+# Plotting the maps one beside the other --> can't be in one because different data sets 
 par(mfrow=c(1,2))
-plot(elevation2)
+plot(elevation)
+plot(densitymap)
+
+par(mfrow=c(2,1))
+plot(elevation)
 plot(densitymap)
 
 # Exercise: make a multiframe with maps one on top of the other
 par(mfrow=c(2,1))
-plot(elevation2)
+plot(elevation)
 plot(densitymap)
 
-# one frined to clear graphs
-dev.off()
-plot(elevation2)
+dev.off()  #close any device/graphs and also to stop par function 
 
-# Changin colors to maps
-cl <- colorRampPalette(c("red", "orange", "yellow"))(3)
+# Changing colours to maps
+cl <- colorRampPalette(c("red", "orange", "yellow"))(3) #capital letters needed because this is the given name 
 plot(densitymap, col=cl)
+
+cl2 <- colorRampPalette(c("green", "red", "blue", "orange")) #is also in this order 
+plot(densitymap, col=cl2) # colouring based on this colours 
+
 
 cl <- colorRampPalette(c("red", "orange", "yellow"))(10)
 plot(densitymap, col=cl)
