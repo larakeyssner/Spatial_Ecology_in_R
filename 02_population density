@@ -68,10 +68,7 @@ plot(densitymap, col=cln)
 
 par(mfrow=c(1,2))
 
-cln <- colorRampPalette(c("purple1", "orchid2", "palegreen3", "paleturquoise"))(100)
 plot(densitymap, col=cln)
-
-clg <- colorRampPalette(c("green4", "green3", "green2", "green1", "green"))(100)
-plot(densitymap, col=clg)
+plot(densitymap, col=cl)
 
 dev.off()
