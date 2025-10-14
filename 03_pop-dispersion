@@ -12,7 +12,7 @@ file <- system.file("external/species.shp", package="sdm") #to find a certain fi
 rana <- vect(file) #SpatVektor = spatial Vektor so vektor in space so over two coordianted (rana is a frog)
 rana #same as print(rana) 200 points and one column 
 
-plot(rana)
+plot(rana) #distribution of occurences so occurence either 1 if there and 0 if not (points can be both 0 or 1)
 
 rana$Occurrence
 
