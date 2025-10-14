@@ -46,25 +46,25 @@ dev.off()  #close any device/graphs and also to stop par function
 cl <- colorRampPalette(c("red", "orange", "yellow"))(3) #capital letters needed because this is the given name 
 plot(densitymap, col=cl)
 
-cl2 <- colorRampPalette(c("green", "red", "blue", "orange")) #is also in this order 
+cl2 <- colorRampPalette(c("green", "red", "blue", "orange")) #is also in this order if no number behinde it takes the default 
 plot(densitymap, col=cl2) # colouring based on this colours 
 
 
 cl <- colorRampPalette(c("red", "orange", "yellow"))(10)
 plot(densitymap, col=cl)
 
-cl <- colorRampPalette(c("red", "orange", "yellow"))(100)
+cl <- colorRampPalette(c("red", "orange", "yellow"))(100) #100 of intermediate colours so it is more smooth the transition (outside of the function)
 plot(densitymap, col=cl)
 
-# search your browser for "colors in R" 
-# http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
+# search your browser for "colors in R" to find the codes or names for the specific colours 
+# https://r-charts.com/colors/   --> possible to copy the code from the page and enter in "" 
 
 # Exercise: change the color ramp palette using different colors
 
 cln <- colorRampPalette(c("purple1", "orchid2", "palegreen3", "paleturquoise"))(100)
 plot(densitymap, col=cln)
 
-# Exrcise: build a multiframe and plot the densitymap with two different color ramp palettes one beside the other
+# Exercise: build a multiframe and plot the densitymap with two different color ramp palettes one beside the other
 
 par(mfrow=c(1,2))
 
