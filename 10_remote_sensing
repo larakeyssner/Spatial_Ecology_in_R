@@ -1,6 +1,0 @@
-#code to visualize remote sensing 
-
-install.packages("imageRy")
-library(imageRy)
-
-im.list()
