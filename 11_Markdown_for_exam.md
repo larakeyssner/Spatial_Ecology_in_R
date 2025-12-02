@@ -52,3 +52,9 @@ the output image looks like (drag and drop):
 
 Let's invert the bands 
 
+
+
+# Others 
+
+```r
+im.list() #Listing files 
