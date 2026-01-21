@@ -1,0 +1,153 @@
+\documentclass[12pt]{article}
+\usepackage{graphicx} % (%) for comments --> Required for inserting images liek package in R 
+\usepackage{hyperref} %to make reffernces package 
+\usepackage{natbib} %package for citation
+
+\title{This is my first LaTeX document} 
+\author{Duccio Rocchini}
+% \date{} %if procentage before it will autmoatically take date from the computer so code not read but directely taken 
+
+\begin{document} %and at the end of document the end fucntion needed 
+
+\maketitle
+
+\linenumbers
+
+\tableofcontents
+
+\section{Introduction}
+\section{Methods}
+\section{Results}
+\section{Discussion}
+\section*{Appendix} %so no number before 
+
+\begin{abstract}
+Let me take you down
+'Cause I'm going to strawberry fields
+Nothing is real
+And nothing to get hung about
+Strawberry fields forever
+Living is easy with eyes closed
+Misunderstanding all you see
+It's getting hard to be someone, but it all works out
+It doesn't matter much to me
+Let me take you down
+'Cause I'm going to strawberry fields
+Nothing is real
+And nothing to get hung about
+
+\noindent so when the new text starts no gap a front 
+\smallskip then text to have a little gap 
+\bigskip to make the skip bigger 
+
+\end{abstract}
+
+\section{Introduction}
+
+Let me take you down
+'Cause I'm going to strawberry fields
+Nothing is real
+And nothing to get hung about
+
+
+% \smallskip
+\bigskip
+Let me take you down
+'Cause I'm going to strawberry fields
+Nothing is real
+And nothing to get hung about
+Strawberry fields forever
+
+
+
+\section{Methods}
+Here functions for gravity 
+
+in the text there is considered the Equation \ref{eq:newton}and then the complex Equation \ref{eq:complex}
+
+%to make relations reffernces to lables (lo longer with numbers so if we change something its not all messed up 
+
+\begin{equation}
+    F = G \times\frac{m_1\times m_2}{r^2}
+    \label{eq:newton}
+\end{equation}
+
+
+\begin{equation}
+    F = \sqrt[3]{G \times\frac{m_1\times m_2}{r^2}}
+    \label{eq:complex}
+\end{equation}
+
+%check wikibooks to see the right functions 
+
+
+Concerning the algorithm being used, we relied on Equation \ref{newton}:
+
+\begin{equation}
+    F = \sqrt[3]{G \times \frac{m_{1444} \times m_2}{r^{21111}}}
+    \label{newton}
+\end{equation}
+
+
+Let me take you down
+'Cause I'm going to strawberry fields
+Nothing is real
+And nothing to get hung about
+Strawberry fields forever
+Living is easy with eyes closed
+Misunderstanding all you see
+It's getting hard to be someone, but it all works out
+It doesn't matter much to me
+Let me take you down
+'Cause I'm going to strawberry fields
+Nothing is real
+And nothing to get hung about
+
+
+The main steps followed in this project were based on:
+\begin{itemize}
+    \item Data gathering
+    \item Data analysis
+    \item Creation of graphical output
+\end{itemize}
+
+The main steps followed in this project were based on:
+\begin{enumerate}
+    \item Data gathering
+    \item Data analysis
+    \item Creation of graphical output
+\end{enumerate}
+
+\section{Results}
+
+Here can find the graphs 
+
+
+
+The main result can be seen in Figure \ref{output}.
+%first have to upload the figure and then it can be used 
+\begin{figure}
+    \centering
+    \includegraphics[width=\linewidth]{ggplot_1_single_smooth.png}
+    \caption{Trend of the analysed data...}
+    \label{output}
+\end{figure}
+
+\section{Discussion}
+
+And nothing to get hung about \cite{Massol2011}
+
+Strawberry fields forever \cite{Anderson2013}.
+
+\begin{thebibliography}{999}
+    \bibitem[Anderson and Geston (2013)]{Anderson2013}
+    Anderson, Karen, and Kevin J. Gaston. "Lightweight unmanned aerial vehicles will revolutionize spatial ecology." Frontiers in Ecology and the Environment 11.3 (2013): 138-146.
+%
+    \bibitem[Massol (2011)]{Massol2011}
+    Massol, François, et al. "Linking community and ecosystem dynamics through spatial ecology." Ecology letters 14.3 (2011): 313-323.
+\end{thebibliography}
+
+
+%the label for the cite is {Massol2011}
+
+\end{document}
