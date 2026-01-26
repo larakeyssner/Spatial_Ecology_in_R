@@ -1,9 +1,4 @@
-```{r setup, include=FALSE, message=FALSE, warning=FALSE}
-# Setup chunk: sets global options for all code chunks
-knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
-```
-
-# Spatial Distribution of Bird Observations in Urban and Natural Areas of Eilenriede City Park, Hanover
+# Spatial Distribution of Bird Observations in Urban and Natural Areas of Eilenriede City Park, Hanover (Germany)
 
 ### Research Question
 Do bird observations differ in density between urban and natural land-cover types in Eilenriede City Park, and how is this associated with vegetation cover (NDVI)?
@@ -66,15 +61,8 @@ Satellite imagery for the study area was sourced from Copernicus.
 ## Starting the Spatial Ecology Analysis in R
 
 ```{r setup-analysis}
-# The working directory was set to the folder containing all downloaded data for the analysis
+#The working directory was set to the folder containing all downloaded data for the analysis
 setwd("~/Desktop/Spatial_R")
-
-# Installing the packages needed for the analysis 
-install.packages("viridis")
-install.packages("terra")    
-install.packages("spatstat")
-install.packages("ggridges")
-install.packages("ggplot2")
 
 # Adding the previously installed packages to the library so they can be used 
 library(viridis) # Colour palette easier to read by those with colourblindness
