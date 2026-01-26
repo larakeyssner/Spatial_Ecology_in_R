@@ -1,5 +1,5 @@
-#Final project Spatial in R
-# Obersvations of bird in the city park Eilenriede 
+#Final project Spatial Ecology in R
+#Birds Obersvations in the city park Eilenriede 
 #to analyse the spatial distrubution of birds between urban and nature areas
 
 #Study area around 50/50
@@ -32,8 +32,8 @@
 #Location: same Polygon as chosen for the GBIF.org data 
 #Download options: Labels off, Captions off, image resolution HIGH (820x819px), TIFF (32-bit float)
 #Date in 2019 without clouds to have a clear image (date chosen 2019-06-29)
-# Layers: Vizualized: True color
-# Layers Raw: B04 and B08
+#Layers: Vizualized: True color
+#Layers Raw: B04 and B08
 # Coordinate system: WGS 84 (EPSG:4326)
 #Resolution: lat.: 0.0000548 deg/px (0.2sec/px); long.: 0.0000898 deg/px (0.3sec/px)
 
