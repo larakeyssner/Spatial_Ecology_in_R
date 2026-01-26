@@ -382,12 +382,14 @@ dens_urban  <- density(urban_ppp)
 dens_forest <- density(forest_ppp)
 
 #To create a panel with two plots in one row 
-par(mfrow= c(1,2))
+#par(mfrow= c(1,2))
 
 #Simple density maps, one for urban and one for forest observations 
 plot(density(urban_ppp), main="Density map of observations in urban areas",ribargs = list(las = 1,cex.axis = 0.8))
 plot(density(forest_ppp), main="Density map of observations in natural areas", ribargs = list(las = 1,cex.axis = 0.8))
 
+#This stops the formation of a panel in the next plots 
+#dev.off()
 
 #First plotting of the raster class to later integrate the kernel density 
 plot(raster_class,col = c("grey75", "darkgreen"),legend = FALSE,main = "Density of Bird observation within the urban and natrual space",
@@ -453,7 +455,7 @@ summary(truecolor)
 #Plot using Red, Green, Blue bands
 plotRGB(truecolor,r = 1, g = 2, b = 3,
         scale = 1,           
-        strech = "lin",      #To make differences more visible 
+        stretch = "lin",      #To make differences more visible 
         main = "True-Color satellite image of Eilenriede")       
 
 #Adding the points to the graph to distinguish the exact areas of the clustered observation 
