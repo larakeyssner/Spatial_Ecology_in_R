@@ -468,18 +468,18 @@ legend( "topright",
         box.col = "grey50",
         cex = 0.7)
 
-#Area with many observation appears to be a lake 
+#Area with many observations appears to be a lake 
 #Next step: verify this observation using NDVI analysis
 
 
 #NDVI raster is already named as 'ndvi'
-#Create water raster so the original NDVI data set remains unchanged 
+#Create a water raster so the original NDVI data set remains unchanged 
 water_raster <- ndvi
 
-#Choosing the right NDVI value for small lakes as well as the pixel resolution cn become a problem in this method: 
-  #Usually  the NDVI value of water bodies in the range of 0 until -0.5
-  #In small lakes the outer vegetation can become a problem (Can change the NDVI value and make it no longer distinguishable as a water body)
-  #Also classification error due to highly impervious surfaces that are wrongly identified as water bodies 
+#Choosing the right NDVI value for small lakes as well as the pixel resolution can become a problem in this method: 
+  #Usually, the NDVI value of water bodies in the range of 0 to -0.5
+  #In small lakes, the outer vegetation can become a problem (Can change the NDVI value and make it no longer distinguishable as a water body)
+  #Also, classification error due to highly impervious surfaces that are wrongly identified as water bodies 
 
 #Threshold-based on classification: everything slightly negative or more is classified as water 
 water_raster[water_raster > -0.009] <- NA   # Non-water (not plotted)
@@ -491,7 +491,7 @@ background_raster[] <- 1  # all cells = 1 to have a clear background
 background_raster[water_raster == 1] <- NA  #removes the cells that are classified water 
 
 #Plotting grey background first
-plot(background_raster, col = "grey80", legend = FALSE, main = "NDVI based water Bodies in Study Area",
+plot(background_raster, col = "grey80", legend = FALSE, main = "NDVI based analyis of water bodies",
      xlab = " Longitude (DD)", ylab = "Latitude (DD)")
 
 #Adding the water raster in blue as an overlay (add = TRUE)
@@ -503,8 +503,9 @@ legend("topright", legend = "Water", fill = "blue", cex = 0.7,
 
 
 #Same plot but with the addition of the points of occurrence
-plot(background_raster, col = "grey80", legend = FALSE, main = "NDVI based water Bodies in Study Area",
+plot(background_raster, col = "grey80", legend = FALSE, main = "Analysis of bird observations and water bodies (NDVI based)",
      xlab = " Longitude (DD)", ylab = "Latitude (DD)")
+
 # Add water in blue as an overlay (add = TRUE)
 plot(water_raster, col = "blue", add = TRUE, legend = FALSE)
 
@@ -516,13 +517,13 @@ legend("topright",
        legend = c("Water bodies", "Bird obsv."),
        pch = c(22, 20),
        pt.bg = c("blue", NA),
-       pt.cex = c(1.5, 0.8),              # smaller symbols
+       pt.cex = c(1.5, 0.8),             # smaller symbols
        col = c("black", "black"),
        cex = 0.8,
-       y.intersp = 0.7,      # tighter vertical spacing
-       x.intersp = 0.5,      # tighter horizontal spacing
-       bg = "white",         # white background
-       box.col = "grey50")   # subtle border
+       y.intersp = 0.7,                  # tighter vertical spacing
+       x.intersp = 0.5,                  # tighter horizontal spacing
+       bg = "white",                     # white background
+       box.col = "grey50")               # subtle border
 
 
 #Interpretation:
