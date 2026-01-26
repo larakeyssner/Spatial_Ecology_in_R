@@ -152,6 +152,9 @@ dmap_bird <- density(occ_points)
 #The number 100 specifies that the palette will contain 100 distinct colour levels
 cl <- viridis(100)
 
+#To create a panel with two plots in one row and defining the bottom, left, top and right margins
+#par(mfrow= c(2,1), mar = c(1, 2, 1, 2))
+
 #Plotting the density together with the points 
 plot(dmap_bird, main = "Density-Map of Bird Observations", col = cl, ribargs = list(las = 1,cex.axis = 0.8))
 plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white" )
@@ -160,6 +163,9 @@ plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white" )
 dm_norm <- eval.im(dmap_bird / max(dmap_bird))
 plot(dm_norm,main = "Normalized Density-Map of Bird Observations",col = cl, ribargs = list(las = 1,cex.axis = 0.8))
 plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white") 
+
+#To stop the formation of a panel in the next plots 
+#dev.off()
 
 #Visualising bird observation density: first as raw density, then normalised (0–1) for easier interpretation
 #The normalised scale is more intuitive to understand and read
@@ -381,14 +387,14 @@ forest_ppp <- occ_points[occ_env$landcover == "Natural"]
 dens_urban  <- density(urban_ppp)
 dens_forest <- density(forest_ppp)
 
-#To create a panel with two plots in one row 
-#par(mfrow= c(1,2))
+#To create a panel with two plots in one row and defining the bottom, left, top and right margins
+#par(mfrow= c(2,1), mar = c(1, 2, 1, 2))
 
 #Simple density maps, one for urban and one for forest observations 
 plot(density(urban_ppp), main="Density map of observations in urban areas",ribargs = list(las = 1,cex.axis = 0.8))
 plot(density(forest_ppp), main="Density map of observations in natural areas", ribargs = list(las = 1,cex.axis = 0.8))
 
-#This stops the formation of a panel in the next plots 
+#To stop the formation of a panel in the next plots 
 #dev.off()
 
 #First plotting of the raster class to later integrate the kernel density 
@@ -452,24 +458,32 @@ truecolor
 summary(truecolor) 
 #The maximum is almost 1 --> setting the scale to 1 for the visualisation 
 
+#Changing the outer margin to create space for the title
+#par(oma = c(0, 0, 2, 3))    
+
 #Plot using Red, Green, Blue bands
 plotRGB(truecolor,r = 1, g = 2, b = 3,
-        scale = 1,           
-        stretch = "lin",      #To make differences more visible 
-        main = "True-Color satellite image of Eilenriede")       
-
-#Adding the points to the graph to distinguish the exact areas of the clustered observation 
-plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white") 
+        scale = 1, stretch = "lin")        #To make differences more visible 
 
 #Adding the legend
 legend( "topright",
-        legend = "Bird obsv.",
+        legend = "Bird Obsv.",
         pch = 1,          
         col = "black",
         pt.cex = 0.5,
         bg = "white",
-        box.col = "grey50",
-        cex = 0.7)
+        cex = 0.6,
+        y.intersp = 2)
+
+#Adding a title on top of the plot because in plotRGB, the function main is not run 
+title("True-color satellite image of Eilenriede", outer = TRUE, cex = 1)
+
+#Adding the points to the graph to distinguish the exact areas of the clustered observation 
+plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white") 
+
+
+#To stop the formation of a panel in the next plots 
+#dev.off()
 
 #Area with many observations appears to be a lake 
 #Next step: verify this observation using NDVI analysis
