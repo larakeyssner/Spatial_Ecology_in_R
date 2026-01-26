@@ -369,7 +369,7 @@ ggplot(occ_env,aes(x = ndvi,y = landcover,fill = landcover)
 
 
 ######################################################################
-###Kernel density analysis together with the land-cover background ### 
+### Density analysis together with the land-cover background ### 
 ######################################################################
 
 #Subset the point pattern by land cover class 
