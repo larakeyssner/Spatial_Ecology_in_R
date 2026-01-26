@@ -216,9 +216,9 @@ plot(raster_class, main = "Clustered NDVI-Map of Urban (1) and Natural (2) Areas
 
 
 
-##########################
-###Statistical analysis###
-##########################
+###########################
+###Statistical analysis ###
+###########################
 
 #Using the density map to analyse the distribution of observations 
 #rast() is converting it into a terra raster 
@@ -368,9 +368,9 @@ ggplot(occ_env,aes(x = ndvi,y = landcover,fill = landcover)
 #Potential drivers include dense vegetation creating forest hot-spots and urban features like parks or water bodies, attracting birds in city areas
 
 
-######################################################################
+################################################################
 ### Density analysis together with the land-cover background ### 
-######################################################################
+################################################################
 
 #Subset the point pattern by land cover class 
 urban_ppp  <- occ_points[occ_env$landcover == "Urban"]
@@ -436,9 +436,9 @@ legend("topright",
 #Further analysis is needed to understand the factors driving high bird activity in this mixed landscape
 
 
-########################################################################################
+#######################################################################################
 ### Analysis of the areas with the highest observation rate (both natural and urban ###
-########################################################################################
+#######################################################################################
 
 #First step: visual analysis of the area loading the true colour satellite image  
 
