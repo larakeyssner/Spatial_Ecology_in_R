@@ -4,58 +4,35 @@
 Do bird observations differ in density between urban and natural land-cover types in Eilenriede City Park, and how is this associated with vegetation cover (NDVI)?
 
 ### Initial Assumption
-Initially assumption is that bird observations would be more frequent in urbanised areas. This expectation is based on the idea that higher human presence in these areas increases the likelihood of birds being seen and recorded. Since the data comes from human observations (GBIF), areas with more visitors are more likely to have observations uploaded.
+Initially assumption is that bird observations would be more frequent in urbanised areas due to higher human presence in these areas which increases the likelihood of birds being seen and recorded
 
 ## The Study Area
 
-The aim was to choose a study area with around 50% natural areas and 50% urban areas.
+The aim was to choose a study area with around 50% natural areas and 50% urban areas
 
 **Why the City park Eilenriede in Hanover:**
 - Because it is one of the biggest forests included in a city in Europe
 - Provides a gradient from highly vegetated areas to areas with human influence
 - Easily accessible to humans, leading to rich citizen science data (e.g., GBIF observations)
 
-**Study Area Coordinates:**
-```
-Longitude (°E) | Latitude (°N)
---------------------------------
-9.744528       | 52.39625
-9.818168       | 52.39625
-9.818168       | 52.35133
-9.744528       | 52.35133
-9.744528       | 52.39625
-```
-
-Area of 5km x 5km = 25km²
+Anarea of 5km x 5km = 25km² with the park in the center 
 
 ## The Ecological Data
 
-The ecological data was downloaded from: https://www.gbif.org/occurrence/download?basis_of_record=HUMAN_OBSERVATION&has_coordinate=true&has_geospatial_issue=false&taxon_key=212&year=2016,2016&geometry=POLYGON((9.74453%2052.39625,9.74453%2052.35133,9.81817%2052.35133,9.81817%2052.39625,9.74453%2052.39625))
-
-The analysis focuses on bird observations from the GBIF database collected in the year 2019.
+The analysis focuses on bird observations from the GBIF database collected in the year 2019
 
 **About the data:**
-- Data about bird observations in the study area
 - Human observations
-- Geometry: POLYGON((9.74453 52.39625,9.74453 52.35133,9.81817 52.35133,9.81817 52.39625,9.74453 52.39625))
-- Has coordinates: true, has geopspatial issues: false
 - Species analysed (Scientific name): Aves (898 occurrences)
 - Date between the start of 2019 and the end of 2019
-- GBIF.org (21 January 2026) GBIF Occurrence Download
-- https://doi.org/10.15468/dl.8zukfu
 
 ## The Satellite Data
 
-Satellite imagery for the study area was sourced from Copernicus.
+Satellite imagery for the study area was sourced from Copernicus
 
-- Website: https://browser.dataspace.copernicus.eu/
-- Geometry: POLYGON((9.74453 52.39625,9.74453 52.35133,9.81817 52.35133,9.81817 52.39625,9.74453 52.39625))
-- Download options: Labels off, Captions off, image resolution HIGH (820x819px), TIFF (32-bit float)
 - Date in 2019 without clouds to have a clear image (date chosen 2019-06-29)
-- Layers: Visualised: True colour
+- Layers - Visualised: True colour
 - Layers Raw: B04 and B08
-- Coordinate system: WGS 84 (EPSG:4326)
-- Resolution: lat.: 0.0000548 deg/px (0.2sec/px); long.: 0.0000898 deg/px (0.3sec/px)
 - Pixel size in meters is around 6 x 6 m
 
 ## Starting the Spatial Ecology Analysis in R
@@ -64,7 +41,7 @@ Satellite imagery for the study area was sourced from Copernicus.
 #The working directory was set to the folder containing all downloaded data for the analysis
 setwd("~/Desktop/Spatial_R")
 
-# Adding the previously installed packages to the library so they can be used 
+#Adding the previously installed packages to the library so they can be used 
 library(viridis) # Colour palette easier to read by those with colourblindness
 library(terra) # Needed for rastering (rast) as well as classifying (classify) and resampling
 library(spatstat) # Spatial windows and point patterns (ppp, owin), Density maps
@@ -75,83 +52,52 @@ library(ggplot2) # for making high-quality plots with the possibility of adding 
 ## Loading the Data Set of the Bird Observations
 
 ```{r load-bird-data}
-# Loading the occurrence data
+#Loading the occurrence data
 occ <- read.table("occurrence.txt", header = TRUE, sep = "\t", fill = TRUE)
-# Using \t to have tabs as a separation between values 
-# fill = TRUE adds NA into empty fields to make the table even 
 
-# Check if there is a column for latitude and longitude --> result TRUE
-"decimalLatitude" %in% names(occ)
-"decimalLongitude" %in% names(occ)
-
-# To have a look at the names of my columns 
-names(occ)
-
-# Making the coordinates numeric to remove any signs (in this case, the quotation marks) 
+#Making the coordinates numeric to remove any signs (in this case, the quotation marks) 
 occ$decimalLatitude  <- as.numeric(occ$decimalLatitude)
 occ$decimalLongitude <- as.numeric(occ$decimalLongitude)
 
-# To check if all values are numeric now 
-head(occ[[98]]) # Latitude 
-head(occ[[99]]) # Longitude
-
-# Removing the empty values in either or both columns
+#Removing the empty values in either or both columns
 occ.clean <- occ[!is.na(occ[[98]]) & !is.na(occ[[99]]), ]
-# is.na() detects missing values and the expression mark negates --> keeps non-NA
-# Only for the column of the coordinates --> so now the data has only the coordinates together with the occurrences
 
-# Setting the limit of my study area to only have the values in the wanted range
+#Setting the limit of my study area to only have the values in the wanted range
 occ.clean2 <- occ.clean[occ.clean[[98]] >= 52.35133 & occ.clean[[98]] <= 52.39625 &
                         occ.clean[[99]] >= 9.744528 & occ.clean[[99]] <= 9.818168, ]
 
-# Creating a data frame with only the spatial information and the occurrences 
+#Creating a data frame with only the spatial information and the occurrences 
 occ.new <- data.frame(lat = occ.clean2[[98]], long = occ.clean2[[99]])
-
-# First visualization of the data to detect obvious errors 
-plot(occ.new$long, occ.new$lat, main = "Map of Bird Observation Points", 
-     xlab = "Longitude (DD)", ylab = "Latitude (DD)")
 ```
-
-**Interpretation:** The initial plot shows the spatial distribution of bird observations within the study area. This helps identify any obvious errors in coordinate ranges or outliers before proceeding with density analysis.
 
 ## Density Map Analysis
 
 Visualisation of bird observation density in the study area. Analysis of the density map to identify areas with higher concentrations of occurrences.
 
 ```{r density-analysis}
-# Define observation spatial window for planar point pattern (ppp)
+#Define observation spatial window for planar point pattern (ppp)
 win <- owin(xrange = c(9.744528, 9.818168),   # Longitude
             yrange = c(52.35133, 52.39625))   # Latitude
 
-# Create ppp object = 2D space (x, y), points and pattern (spatial structure)
-# Combines coordinates and study area 
+#Create ppp object = 2D space (x, y), points and pattern (spatial structure)
+#Combines coordinates and study area 
 occ_points <- ppp(x = occ.new$long, y = occ.new$lat, window = win)
-# After running this line: warning of duplicates 
-# This is normal for this kind of ecological data 
+#After running this line: warning of duplicates 
+#This is normal for this kind of ecological data 
 
-# Smoothing point location to develop a density map
+#Smoothing point location to develop a density map
 dmap_bird <- density(occ_points)
 
-# Defining the colour palette for graphs using Viridis, which is easily readable for colorblind individuals
-# The number 100 specifies that the palette will contain 100 distinct colour levels
-cl <- viridis(100)
-
-# To create a panel with two plots in one row and defining the bottom, left, top and right margins
-par(mfrow = c(1, 2), mar = c(4, 4, 3, 2))
-
-# Plotting the density together with the points 
+#Plotting the density together with the points 
 plot(dmap_bird, main = "Density-Map of Bird Observations", col = cl, 
      ribargs = list(las = 1, cex.axis = 0.8))
 plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white")
 
-# Normalized density map (0= no-occurrence and 1= occurrence) --> scale is more intuitive 
+#Normalized density map (0= no-occurrence and 1= occurrence) --> scale is more intuitive 
 dm_norm <- eval.im(dmap_bird / max(dmap_bird))
 plot(dm_norm, main = "Normalized Density-Map of Bird Observations", col = cl, 
      ribargs = list(las = 1, cex.axis = 0.8))
 plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white") 
-
-# Reset plot parameters
-par(mfrow = c(1, 1))
 ```
 
 **Interpretation:** Visualising bird observation density: first as raw density, then normalised (0–1) for easier interpretation. The normalised scale is more intuitive to understand and read. The density maps show clear hotspots of bird observations, particularly in certain areas of the park.
@@ -159,25 +105,20 @@ par(mfrow = c(1, 1))
 ## Loading the Satellite Images as Rasters
 
 ```{r load-rasters}
-# First, loading the downloaded bands as rasters and giving them a name 
 rastB8 <- rast("Eilenriede_B08.tiff") # This is the NIR band
 rastB4 <- rast("Eilenriede_B04.tiff") # This is the red band
-
-# To have a look at the information regarding the two rasters to check if everything worked smoothly 
-rastB4
-rastB8
 ```
 
 ## Calculation of the DVI and NDVI
 
 ```{r calculate-indices}
-# Calculation of the Difference Vegetation Index (DVI)
+#Calculation of the Difference Vegetation Index (DVI)
 dvi <- rastB8 - rastB4 # DVI = NIR band - Red band 
 
-# Calculation of the Normalised Difference Vegetation Index (NDVI) --> ranging from -1 to 1 
+#Calculation of the Normalised Difference Vegetation Index (NDVI) --> ranging from -1 to 1 
 ndvi <- dvi / (rastB8 + rastB4) # NDVI = DVI / (NIR band + red band)
 
-# Plotting of the NDVI values of my study area 
+#Plotting of the NDVI values of my study area 
 plot(ndvi, main = "Map of the NDVI-Value", col = cl, 
      plg = list(title = "NDVI-value", cex = 1),
      xlab = "Longitude (DD)", ylab = "Latitude (DD)")
@@ -190,17 +131,17 @@ plot(ndvi, main = "Map of the NDVI-Value", col = cl,
 ## Clustering of the Land-Cover Types
 
 ```{r classify-landcover}
-# Using two clusters to separate between natural and urban areas
+#Using two clusters to separate between natural and urban areas
 ndvi_class <- matrix(c(-1.0, 0.5, 1,              # Cluster 1
                         0.5, 1.0, 2),             # Cluster 2
                         ncol = 3, byrow = TRUE)   # three columns and fill row by row
 
-# The result is a matrix with two columns for the range and one for the associated class 
+#The result is a matrix with two columns for the range and one for the associated class 
 
-# Classifying the NDVI map into those 2 clusters = applying the classification to every pixel of the NDVI raster
+#Classifying the NDVI map into those 2 clusters = applying the classification to every pixel of the NDVI raster
 raster_class <- classify(ndvi, ndvi_class)
 
-# Plotting the clustered raster 
+#Plotting the clustered raster 
 plot(raster_class, main = "Clustered NDVI-Map of Urban (1) and Natural (2) Areas", col = cl,
      xlab = "Longitude (DD)", ylab = "Latitude (DD)")
 ```
@@ -210,40 +151,35 @@ plot(raster_class, main = "Clustered NDVI-Map of Urban (1) and Natural (2) Areas
 ## Statistical Analysis
 
 ```{r statistical-analysis}
-# Using the density map to analyse the distribution of observations 
-# rast() is converting it into a terra raster 
+#Using the density map to analyse the distribution of observations 
 raster_birds <- rast(dmap_bird)
 
-# Same data structure of bird density and NDVI-based land cover 
-# Bird density is continuous; Bilinear interpolation computes a weighted average of nearby pixels
+#Same data structure of bird density and NDVI-based land cover 
+#Bird density is continuous; Bilinear interpolation computes a weighted average of nearby pixels
 raster_birds_new <- resample(raster_birds, raster_class, method = "bilinear")
 
-# Extraction of all raster cell values of the Bird density
+#Extraction of all raster cell values of the Bird density
 birds <- values(raster_birds_new)
-# Converts it into a vector 
+#Converts it into a vector 
 birds <- as.vector(birds)
 
-# Extraction of all raster cell values of the landcover classes 
+#Extraction of all raster cell values of the landcover classes 
 landcover <- values(raster_class)
 landcover <- as.vector(landcover)
 
-# Data frame (pixel-wise) with estimated bird density in a cell and the landcover type 
+#Data frame (pixel-wise) with estimated bird density in a cell and the landcover type 
 df_BU <- data.frame(bird_density = birds, landcover = landcover)
 
-# Subset bird density values by the landcover category (urban pixel and natural pixels)
-# Two independent samples that can be compared 
+#Subset bird density values by the landcover category (urban pixel and natural pixels)
 urban_density   <- df_BU$bird_density[df_BU$landcover == 1]
 natural_density <- df_BU$bird_density[df_BU$landcover == 2]
 
-# Choosing the Wilcoxon test because it doesn't assume normality and works for large samples 
-# Standard in ecology for NDVI-type of data 
+#Choosing the Wilcoxon test because it doesn't assume normality and works for large samples 
+#H0: The distribution of bird observation density is the same in urban and natural areas. 
+#H1: Bird observation density differs between urban and natural land-cover areas.
 
-# H0: The distribution of bird observation density is the same in urban and natural areas. 
-# H1: Bird observation density differs between urban and natural land-cover areas.
-
-# Wilcoxon rank sum test with continuity correction
+#Wilcoxon rank sum test with continuity correction
 wilcox_result <- wilcox.test(urban_density, natural_density)
-wilcox_result
 ```
 
 **Interpretation of Wilcoxon test results:**
@@ -255,21 +191,21 @@ wilcox_result
 ## Association of Bird Observation and Urban/Natural Areas
 
 ```{r association-analysis}
-# Convert the cleaned data frame with observations and coordinates (occ.new) into a vector
-# Use long and lat as the coordinates, and the reference system is WGS84
+#Convert the cleaned data frame with observations and coordinates (occ.new) into a vector
+#Use long and lat as the coordinates, and the reference system is WGS84
 occ_vect <- vect(occ.new, geom = c("long", "lat"), crs = "EPSG:4326")
 
-# Extract NDVI values at bird locations, which allows spatial overlay points and a raster layer
-# Extract raster cell value of ndvi of each occurrence (occ_vect) --> points-based extraction 
+#Extract NDVI values at bird locations, which allows spatial overlay points and a raster layer
+#Extract raster cell value of ndvi of each occurrence (occ_vect) --> points-based extraction 
 occ_ndvi <- extract(ndvi, occ_vect)
 
-# Combination of original occurrence data with extracted NDVI values
+#Combination of original occurrence data with extracted NDVI values
 occ_env <- cbind(occ.new, ndvi = occ_ndvi[, 2]) # data is placed into rows and two columns (NDVI and occurrence)
 
-# Label classes --> new categorical variable of land-cover, either threshold of 0.5
+#Label classes --> new categorical variable of land-cover, either threshold of 0.5
 occ_env$landcover <- ifelse(occ_env$ndvi < 0.5, "Urban", "Natural")
 
-# Plot of the vector with the categorical values of land-cover
+#Plot of the vector with the categorical values of land-cover
 barplot(table(occ_env$landcover),           # Counts how often category occurs 
         col = c("darkgreen", "grey40"),
         main = "Number of Bird Observations divided by land-cover",
@@ -279,7 +215,7 @@ barplot(table(occ_env$landcover),           # Counts how often category occurs
 **Interpretation:** Bird observations are more frequent in natural areas with approximately 350 observations in urban areas and 550 in forested/natural areas. This contradicts the initial assumption that urban areas would have more observations.
 
 ```{r ndvi-map-points}
-# Plot of the classified NDVI raster
+#Plot of the classified NDVI raster
 plot(raster_class,
     col = cl,
     legend = FALSE,
@@ -287,11 +223,11 @@ plot(raster_class,
     xlab = "Longitude (DD)",
     ylab = "Latitude (DD)")
 
-# Adding the bird observation points to the graph of the land-cover cluster 
+#Adding the bird observation points to the graph of the land-cover cluster 
 points(occ_env$long, occ_env$lat, pch = 20,
        col = ifelse(occ_env$landcover == "Urban", "white", "red"), cex = 0.8) # Urban white if not than red (so natural)
 
-# Adding a legend to the plot 
+#Adding a legend to the plot 
 legend("topright", legend = c("Urban area", "Natural area", "Urban birds", "Forest birds"),
         pt.bg = c("purple4", "yellow", NA, NA),              # Background colour (only needed for squares)
         pch = c(22, 22, 1, 20),
@@ -343,42 +279,39 @@ ggplot(occ_env, aes(x = ndvi, y = landcover, fill = landcover)) +
 ## Density Analysis Together with the Land-Cover Background
 
 ```{r density-landcover}
-# Subset the point pattern by land cover class 
+#Subset the point pattern by land cover class 
 urban_ppp  <- occ_points[occ_env$landcover == "Urban"]
 forest_ppp <- occ_points[occ_env$landcover == "Natural"]
 
-# Kernel density surface for each subset
+#Kernel density surface for each subset
 dens_urban  <- density(urban_ppp)
 dens_forest <- density(forest_ppp)
 
-# Create a panel with two plots in one row
+#Create a panel with two plots in one row
 par(mfrow = c(1, 2), mar = c(4, 4, 3, 2))
 
-# Simple density maps, one for urban and one for forest observations 
+#Simple density maps, one for urban and one for forest observations 
 plot(density(urban_ppp), main = "Density map of observations in urban areas", ribargs = list(las = 1, cex.axis = 0.8))
 plot(density(forest_ppp), main = "Density map of observations in natural areas", ribargs = list(las = 1, cex.axis = 0.8))
 
-# Reset plot parameters
+#Reset plot parameters
 par(mfrow = c(1, 1))
 
-# First plotting of the raster class to later integrate the kernel density 
+#First plotting of the raster class to later integrate the kernel density 
 plot(raster_class, col = c("grey75", "darkgreen"), legend = FALSE, 
      main = "Density of Bird observation within the urban and natural space",
      xlab = "Longitude (DD)", ylab = "Latitude (DD)")
 
-# Adding the density contours to the plot of NDVI classification
-
-# Urban – core hot-spot only (the top 10% of the density value (v=value))
-# Add = TRUE so the raster below is not removed 
+#Urban – core hot-spot only (the top 10% of the density value (v=value))
 contour(dens_urban, add = TRUE, col = "red", lwd = 2, levels = quantile(dens_urban$v, probs = 0.9))
 
-# Forest – core hot-spot only (the top 10% of the density value (v=value))
+#Forest – core hot-spot only (the top 10% of the density value (v=value))
 contour(dens_forest, add = TRUE, col = "blue", lwd = 2, levels = quantile(dens_forest$v, probs = 0.9))
 
-# Adding the bird observation points to the map
+#Adding the bird observation points to the map
 points(occ_points, pch = 20, cex = 0.3, col = "black")
 
-# Adding a legend to the plot, including all added features 
+#Adding a legend to the plot, including all added features 
 legend("topright", 
        legend = c("Urban area",
                   "Natural area",
@@ -410,50 +343,16 @@ legend("topright",
 
 ```{r true-color-analysis}
 # First step: visual analysis of the area loading the true colour satellite image  
-
-# Loading the true colour satellite image as a raster
 truecolor <- rast("Eilenriede_True.tiff")
-
-# Checking the raster --> has nlyr = 3 which means three band raster 
-# 1 = Red, 2 = Green, 3 = blue 
-truecolor
-
-summary(truecolor) 
-# The maximum is almost 1 --> setting the scale to 1 for the visualisation 
-
-# Changing the outer margin to create space for the title
-par(oma = c(0, 0, 2, 0))    
-
-# Plot using Red, Green, Blue bands
 plotRGB(truecolor, r = 1, g = 2, b = 3,
         scale = 1, stretch = "lin")        # To make differences more visible 
-
 # Adding the points to the graph to distinguish the exact areas of the clustered observation 
 plot(occ_points, add = TRUE, pch = 20, cex = 0.5, col = "white") 
-
-# Adding the legend
-legend("topright", inset = c(0.03, 0),
-        legend = "Bird Observations",
-        pch = 1,          
-        col = "black",
-        pt.cex = 0.5,
-        bg = "white",
-        cex = 0.5,
-        y.intersp = 1,
-        x.intersp = 0.5)
-
-# Adding a title on top of the plot because in plotRGB, the function main is not run 
-title("True-color satellite image of Eilenriede", outer = TRUE, cex = 1)
-
-# Reset plot parameters
-par(oma = c(0, 0, 0, 0))
 ```
 
 **Interpretation:** Area with many observations appears to be a lake. Next step: verify this observation using NDVI analysis.
 
 ```{r water-analysis}
-# NDVI raster is already named as 'ndvi'
-# Create a water raster so the original NDVI data set remains unchanged 
 water_raster <- ndvi
 
 # Threshold-based on classification: everything slightly negative or more is classified as water 
@@ -465,19 +364,6 @@ background_raster <- ndvi
 background_raster[] <- 1  # all cells = 1 to have a clear background 
 background_raster[water_raster == 1] <- NA  # removes the cells that are classified water 
 
-# Plotting grey background first
-plot(background_raster, col = "grey80", legend = FALSE, 
-     main = "NDVI based analysis of water bodies",
-     xlab = "Longitude (DD)", ylab = "Latitude (DD)")
-
-# Adding the water raster in blue as an overlay (add = TRUE)
-plot(water_raster, col = "blue", add = TRUE, legend = FALSE)
-
-# Adding a legend 
-legend("topright", legend = "Water", fill = "blue", cex = 0.7,  
-       bg = "white", box.col = "grey50")
-
-# Same plot but with the addition of the points of occurrence
 plot(background_raster, col = "grey80", legend = FALSE, 
      main = "Analysis of bird observations and water bodies (NDVI based)",
      xlab = "Longitude (DD)", ylab = "Latitude (DD)")
