@@ -459,27 +459,28 @@ summary(truecolor)
 #The maximum is almost 1 --> setting the scale to 1 for the visualisation 
 
 #Changing the outer margin to create space for the title
-#par(oma = c(0, 0, 2, 3))    
+#par(oma = c(0, 0, 2, 0))    
 
 #Plot using Red, Green, Blue bands
 plotRGB(truecolor,r = 1, g = 2, b = 3,
         scale = 1, stretch = "lin")        #To make differences more visible 
 
+#Adding the points to the graph to distinguish the exact areas of the clustered observation 
+plot(occ_points, add = TRUE, pch = 20, cex = 0.5, col = "white") 
+
 #Adding the legend
-legend( "topright",
-        legend = "Bird Obsv.",
+legend( "topright", inset = c(0.03, 0),
+        legend = "Bird Observations",
         pch = 1,          
         col = "black",
         pt.cex = 0.5,
         bg = "white",
-        cex = 0.6,
-        y.intersp = 2)
+        cex = 0.5,
+        y.intersp = 1,
+        x.intersp = 0.5)
 
 #Adding a title on top of the plot because in plotRGB, the function main is not run 
 title("True-color satellite image of Eilenriede", outer = TRUE, cex = 1)
-
-#Adding the points to the graph to distinguish the exact areas of the clustered observation 
-plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white") 
 
 
 #To stop the formation of a panel in the next plots 
