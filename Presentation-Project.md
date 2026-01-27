@@ -10,15 +10,15 @@ Initially assumption is that bird observations would be more frequent in urbanis
 The aim was to choose a study area with around 50% natural areas and 50% urban areas
 
 **Why the City park Eilenriede in Hanover:**
-- Because it is one of the biggest forests in a city in Europe
+- It is one of the biggest forests in a city in Europe
 - Provides a gradient from highly vegetated areas to areas with human influence
 - Easily accessible to humans, leading to rich citizen science data (e.g., GBIF observations)
 
-Anarea of 5km x 5km = 25km² with the park in the center 
+Area of 5km x 5km = 25km² with the park in the center 
 
 ## The Ecological Data
 
-The analysis focuses on bird observations from the GBIF database collected in the year 2019
+Bird observations from the GBIF database collected in the year 2019
 
 **About the data:**
 - Human observations
@@ -37,7 +37,7 @@ Satellite imagery for the study area was sourced from Copernicus
 
 ```{r setup-analysis}
 library(viridis)    #Colour palette easier to read by those with colourblindness
-library(terra)      #Needed for rastering (rast) as well as classifying (classify) and resampling
+library(terra)      #Needed for rastering (rast), classifying (classify), resampling, plotRBG
 library(spatstat)   #Spatial windows and point patterns (ppp, owin), Density maps
 library(ggridges)   #Ridge density plots 
 library(ggplot2)    #For making high-quality plots with the possibility of adding multiple features
