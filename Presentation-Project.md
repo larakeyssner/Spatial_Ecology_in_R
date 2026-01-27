@@ -215,7 +215,7 @@ plot(raster_class, col = cl, legend = FALSE, main = "NDVI-Map of Urban and Natur
 
 #Adding the bird observation points to the graph of the land-cover cluster 
 points(occ_env$long, occ_env$lat, pch = 20,
-       col = ifelse(occ_env$landcover == "Urban", "white", "red"), cex = 0.8) # Urban white if not than red (so natural)
+       col = ifelse(occ_env$landcover == "Urban", "white", "blue"), cex = 1)
 
 #Adding a legend to the plot 
 ```
