@@ -149,8 +149,8 @@ plot(raster_class, main = "Clustered NDVI-Map of Urban (1) and Natural (2) Areas
 ## Statistical Analysis
 
 **Hypothesis of the statistical analysis**
-**H0** The distribution of bird observation density is the same in urban and natural areas
-**H1** Bird observation density differs between urban and natural land-cover areas
+- **H0** The distribution of bird observation density is the same in urban and natural areas
+- **H1** Bird observation density differs between urban and natural land-cover areas
 
 ```{r statistical-analysis}
 #Using the density map to analyse the distribution of observations 
