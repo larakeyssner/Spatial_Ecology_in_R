@@ -204,7 +204,8 @@ barplot(table(occ_env$landcover),col = c("darkgreen", "grey40"), main = "Number 
         ylab = "Number of observations", ylim = c(0, 600))
 ```
 <p align="center">
-<img width="514" height="513" src = https://github.com/user-attachments/assets/beebbb64-2f29-4d2f-b148-3bbbd381d140>
+<img width="514" height="513" src = https://github.com/user-attachments/assets/e5da4367-e74d-46ce-9101-62db6b7b3c98>
+
 
 **Interpretation:** Bird observations are more frequent in natural areas with approximately 350 observations in urban areas and 550 in forested/natural areas. This contradicts the initial assumption that urban areas would have more observations.
 
