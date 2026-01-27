@@ -226,7 +226,7 @@ points(occ_env$long, occ_env$lat, pch = 20,
 
 
   
-**Interpretation:** The overlay of bird observations on the classified NDVI map clearly shows that most observations occur in natural (green) areas, with relatively fewer observations in urban (purple) areas.
+**Interpretation:** The overlay of bird observations on the classified NDVI map clearly shows that most observations occur in natural areas, with relatively fewer observations in urban areas.
 
 ## Ridge Analysis
 
