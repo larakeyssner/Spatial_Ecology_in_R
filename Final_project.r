@@ -345,7 +345,6 @@ ggplot(occ_env,aes(x = ndvi,y = landcover,fill = landcover)
 ) + geom_density_ridges(                                    #Adding the Ridge plot geometry
     alpha = 0.7,                                            #Set transparency
     scale = 1,                                              #Vertical scaling ridge 
-    rel_min_height = 0.01,                                  #Removes density values below 1% of max
     color = "white",
     linewidth = 0.3
 ) + coord_cartesian(xlim = c(-0.5, 1)) +                    #Limits x-axis range 
