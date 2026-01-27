@@ -281,7 +281,7 @@ plot(density(forest_ppp), main = "Density map of observations in natural areas",
 
 ```{r density-landcover}
 #First plotting of the raster class to later integrate the kernel density 
-plot(raster_class, col = c("grey75", "darkgreen"), legend = FALSE, main = "Density of Bird observation within the urban and natural space",
+plot(raster_class, col = c("azure4", "lightgrey"), legend = FALSE, main = "Density of Bird observation within the urban and natural space",
      xlab = "Longitude (DD)", ylab = "Latitude (DD)")
 
 #Urban – core hot-spot only (the top 10% of the density value (v=value))
