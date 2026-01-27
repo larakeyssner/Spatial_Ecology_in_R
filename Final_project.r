@@ -340,7 +340,7 @@ legend("topright", legend = c("Urban area", "Natural area", "Urban birds", "Fore
 ### Ridge analysis ### 
 ######################
 
-#In ggplot2 the + chains together differnt layers/modifications to built the plot step by step
+#In ggplot2, the + chains together different layers/modifications to build the plot step by step
 ggplot(occ_env,aes(x = ndvi,y = landcover,fill = landcover)
 ) + geom_density_ridges(                                    #Adding the Ridge plot geometry
     alpha = 0.7,                                            #Set transparency
@@ -354,7 +354,6 @@ ggplot(occ_env,aes(x = ndvi,y = landcover,fill = landcover)
     labs(title = "Bird Observation across NDVI-Values",     #Adding all the labels
     x = "NDVI-Value",
     y = "Type of land-cover",
-    fill = "Land-cover"
 )+ theme(legend.position = "none")                          #Removing the legend
 
 
