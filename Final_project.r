@@ -234,27 +234,24 @@ raster_birds <- rast(dmap_bird)
 #Bird density is continuous; Bilinear interpolation computes a weighted average of nearby pixels
 raster_birds_new <- resample(raster_birds,raster_class,method = "bilinear")
 
-#Extraction of all raster cell values of the Bird density
-birds <- values(raster_birds_new)
 #Converts it into a vector 
 birds <- as.vector(birds)
-
-#Extraction of all raster cell values of the landcover classes 
-landcover <- values(raster_class)
-landcover <- as.vector(landcover)
+landcover_new <- as.vector(landcover)
 
 #Data frame (pixel-wise) with estimated bird density in a cell and the landcover type 
-df_BU <- data.frame(bird_density = birds,landcover = landcover)
+df <- data.frame(bird_density = birds, landcover = landcover)
+
+#Removing the rows with NA
+df_clean <- na.omit(df)
 
 #Subset bird density values by the landcover category (urban pixel and natural pixels)
 #Two independent samples that can be compared 
-urban_density   <- df_BU$bird_density[df_BU$landcover == 1]
-natural_density <- df_BU$bird_density[df_BU$landcover == 2]
+urban_density <- df_clean$bird_density[df_clean$landcover == 1]
+natural_density <- df_clean$bird_density[df_clean$landcover == 2]
 
 #First step: testing for normality 
   #BUT with large samples, even tiny deviations are still statistically significant 
   #For example Shapiro-Wilk test will almost always reject normality because the test is too sensitive 
-
 
 #Choosing the Wilcoxon test because it doesn't assume normality and works for large samples 
   #Standard in ecology for NDVI-type of data 
