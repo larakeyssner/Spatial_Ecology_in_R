@@ -91,9 +91,10 @@ plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white")
 <img width="514" height="513" src = https://github.com/user-attachments/assets/43a569aa-5b56-485d-94a4-23f0a7c9322e>
 
 
-**Interpretation:** Visualising bird observation density
-The normalised scale is more intuitive to understand and read
-The density maps show clear hotspots of bird observations, particularly in certain areas
+**Interpretation:** 
+- Visualising bird observation density
+- The normalised scale is more intuitive to understand and read
+- The density maps show clear hotspots of bird observations, particularly in certain areas
 
 ## Loading the Satellite Images as Rasters
 
