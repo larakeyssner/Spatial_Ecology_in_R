@@ -319,8 +319,8 @@ plot(occ_points, add = TRUE, pch = 20, cex = 0.5, col = "white")
 
 
 **Interpretation:** Area with many observations appears to be a lake -> Next step: verify this observation using NDVI analysis
-- Usually  the NDVI value of water bodies in the range of 0 to -0.5
-- In small lakes the outer vegetation can become a disrupt this range (NDVI value and make it no longer distinguishable as a water body)
+- Usually  the NDVI value of water bodies is in the range of 0 to -0.5
+- In small lakes the outer vegetation can disrupt this range (NDVI value no longer distinguishable as a water body)
 
 ```{r water-analysis}
 water_raster <- ndvi
