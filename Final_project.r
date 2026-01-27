@@ -234,9 +234,9 @@ raster_birds <- rast(dmap_bird)
 #Bird density is continuous; Bilinear interpolation computes a weighted average of nearby pixels
 raster_birds_new <- resample(raster_birds,raster_class,method = "bilinear")
 
-#Converts it into a vector 
-birds <- as.vector(birds)
-landcover_new <- as.vector(landcover)
+# Extract and convert to vectors
+birds <- as.vector(values(raster_birds_new))
+landcover <- as.vector(values(raster_class))
 
 #Data frame (pixel-wise) with estimated bird density in a cell and the landcover type 
 df <- data.frame(bird_density = birds, landcover = landcover)
