@@ -82,7 +82,7 @@ dmap_bird <- density(occ_points)
 plot(dmap_bird, main = "Density-Map of Bird Observations", col = cl, ribargs = list(las = 1, cex.axis = 0.8))
 plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white")
 
-#Normalized density map (0= no-occurrence and 1= occurrence) --> scale is more intuitive 
+#Normalized density map (scale is more intuitive)
 dm_norm <- eval.im(dmap_bird / max(dmap_bird))
 plot(dm_norm, main = "Normalized Density-Map of Bird Observations", col = cl, ribargs = list(las = 1, cex.axis = 0.8))
 plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white") 
