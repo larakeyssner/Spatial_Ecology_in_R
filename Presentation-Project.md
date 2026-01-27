@@ -99,6 +99,7 @@ plot(dm_norm, main = "Normalized Density-Map of Bird Observations", col = cl,
      ribargs = list(las = 1, cex.axis = 0.8))
 plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white") 
 ```
+[Dmap1.pdf](https://github.com/user-attachments/files/24870629/Dmap1.pdf)
 
 **Interpretation:** Visualising bird observation density: first as raw density, then normalised (0–1) for easier interpretation. The normalised scale is more intuitive to understand and read. The density maps show clear hotspots of bird observations, particularly in certain areas of the park.
 
@@ -123,6 +124,7 @@ plot(ndvi, main = "Map of the NDVI-Value", col = cl,
      plg = list(title = "NDVI-value", cex = 1),
      xlab = "Longitude (DD)", ylab = "Latitude (DD)")
 ```
+[NDVI-map.pdf](https://github.com/user-attachments/files/24870631/NDVI-map.pdf)
 
 **Interpretation of the calculation:**
 - Values ranging from -1 to 0.5 are classified as water, soil, or most buildings
@@ -145,6 +147,7 @@ raster_class <- classify(ndvi, ndvi_class)
 plot(raster_class, main = "Clustered NDVI-Map of Urban (1) and Natural (2) Areas", col = cl,
      xlab = "Longitude (DD)", ylab = "Latitude (DD)")
 ```
+[NDVI-cluster.pdf](https://github.com/user-attachments/files/24870634/NDVI-cluster.pdf)
 
 **Interpretation:** The NDVI map has been classified into two land-cover types: Urban (class 1, NDVI ≤ 0.5) and Natural (class 2, NDVI > 0.5). This binary classification allows for direct comparison of bird observations between urban and natural areas.
 
@@ -211,6 +214,7 @@ barplot(table(occ_env$landcover),           # Counts how often category occurs
         main = "Number of Bird Observations divided by land-cover",
         ylab = "Number of observations", ylim = c(0, 600))
 ```
+[barplot.pdf](https://github.com/user-attachments/files/24870638/barplot.pdf)
 
 **Interpretation:** Bird observations are more frequent in natural areas with approximately 350 observations in urban areas and 550 in forested/natural areas. This contradicts the initial assumption that urban areas would have more observations.
 
@@ -239,6 +243,7 @@ legend("topright", legend = c("Urban area", "Natural area", "Urban birds", "Fore
         bg = "white",                                        # White background
         box.col = "grey50")                                  # Subtle border
 ```
+[cluster+obsv.pdf](https://github.com/user-attachments/files/24870644/cluster%2Bobsv.pdf)
 
 **Interpretation:** The overlay of bird observations on the classified NDVI map clearly shows that most observations occur in natural (green) areas, with relatively fewer observations in urban (purple) areas.
 
@@ -262,6 +267,7 @@ ggplot(occ_env, aes(x = ndvi, y = landcover, fill = landcover)) +
        fill = "Land-cover") +
   theme(legend.position = "none")
 ```
+[Ridge.pdf](https://github.com/user-attachments/files/24870648/Ridge.pdf)
 
 **Interpretation:**
 - The NDVI distribution shows multiple peaks, indicating the presence of different habitat types within each land-cover class
@@ -331,6 +337,10 @@ legend("topright",
         bg = "white",                                       # White background
         box.col = "grey50")                                 # Subtle border
 ```
+[dmap(seperated).pdf](https://github.com/user-attachments/files/24870664/dmap.seperated.pdf)
+
+[cluster+dmap.pdf](https://github.com/user-attachments/files/24870665/cluster%2Bdmap.pdf)
+
 
 **Interpretation:**
 - Several hot-spots of bird observations are visible across different habitats, consistent with the ridge analysis results
@@ -349,6 +359,7 @@ plotRGB(truecolor, r = 1, g = 2, b = 3,
 # Adding the points to the graph to distinguish the exact areas of the clustered observation 
 plot(occ_points, add = TRUE, pch = 20, cex = 0.5, col = "white") 
 ```
+[truecolor.pdf](https://github.com/user-attachments/files/24870667/truecolor.pdf)
 
 **Interpretation:** Area with many observations appears to be a lake. Next step: verify this observation using NDVI analysis.
 
@@ -387,6 +398,7 @@ legend("topright",
        bg = "white",                     # White background
        box.col = "grey50")               # Subtle border
 ```
+[water+ndvi.pdf](https://github.com/user-attachments/files/24870668/water%2Bndvi.pdf)
 
 **Interpretation:**
 - This NDVI analysis of water remains partly inconclusive due to the small spatial extent of the water body relative to the raster resolution
