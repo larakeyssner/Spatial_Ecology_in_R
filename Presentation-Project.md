@@ -3,14 +3,14 @@
 Do bird observations differ in density between urban and natural land-cover types, and how is this associated with vegetation cover?
 
 ### Initial Assumption
-Initially assumption is that bird observations would be more frequent in urbanised areas due to higher human presence in these areas which increases the likelihood of birds being seen and recorded
+Initially assumption is that bird observations would be more frequent in urbanised areas due to higher human presence in these areas, which increases the likelihood of birds being seen and recorded
 
 ## The Study Area
 
 The aim was to choose a study area with around 50% natural areas and 50% urban areas
 
 **Why the City park Eilenriede in Hanover:**
-- Because it is one of the biggest forests included in a city in Europe
+- Because it is one of the biggest forests in a city in Europe
 - Provides a gradient from highly vegetated areas to areas with human influence
 - Easily accessible to humans, leading to rich citizen science data (e.g., GBIF observations)
 
@@ -125,7 +125,7 @@ plot(ndvi, main = "Map of the NDVI-Value", col = cl, plg = list(title = "NDVI-va
 ## Clustering of the Land-Cover Types
 
 ```{r classify-landcover}
-#Using two clusters to separate between natural and urban areas
+#Using two clusters to separate natural and urban areas
 ndvi_class <- matrix(c(-1.0, 0.5, 1,              # Cluster 1
                         0.5, 1.0, 2),             # Cluster 2
                         ncol = 3, byrow = TRUE)   # three columns and fill row by row
@@ -147,7 +147,7 @@ plot(raster_class, main = "Clustered NDVI-Map of Urban (1) and Natural (2) Areas
 
 ## Statistical Analysis
 
-**Hypothesis of the statistcial analysis**
+**Hypothesis of the statistical analysis**
 **H0** The distribution of bird observation density is the same in urban and natural areas
 **H1** Bird observation density differs between urban and natural land-cover areas
 
@@ -200,7 +200,8 @@ occ_env <- cbind(occ.new, ndvi = occ_ndvi[, 2])
 occ_env$landcover <- ifelse(occ_env$ndvi < 0.5, "Urban", "Natural")
 
 #Plot of the vector with the categorical values of land-cover
-barplot(table(occ_env$landcover),col = c("darkgreen", "grey40"), main = "Number of Bird Observations divided by         land-cover", ylab = "Number of observations", ylim = c(0, 600))
+barplot(table(occ_env$landcover),col = c("darkgreen", "grey40"), main = "Number of Bird Observations divided by land-cover",
+        ylab = "Number of observations", ylim = c(0, 600))
 ```
 <p align="center">
 <img width="514" height="513" src = https://github.com/user-attachments/assets/beebbb64-2f29-4d2f-b148-3bbbd381d140>
@@ -219,7 +220,8 @@ points(occ_env$long, occ_env$lat, pch = 20,
 #Adding a legend to the plot 
 ```
 <p align="center">
-<img width="514" height="513" src = https://github.com/user-attachments/assets/b6dbe780-d238-4e54-9e44-9c3fc2752b7c>
+<img width="514" height="513" src = https://github.com/user-attachments/assets/ef15e6d3-ad8c-4bc2-91fb-8be57322d8f6>
+
 
   
 **Interpretation:** The overlay of bird observations on the classified NDVI map clearly shows that most observations occur in natural (green) areas, with relatively fewer observations in urban (purple) areas.
@@ -253,7 +255,7 @@ ggplot(occ_env, aes(x = ndvi, y = landcover, fill = landcover))
 - In natural areas:
   - Bird observations are concentrated at high NDVI values (0.6 to 0.9), reflecting dense and healthy vegetation
   - Two distinct peaks may represent different forest types or variation in vegetation density (e.g., forest core vs. edges/clearings)
-- There is very little overlap between the two distributions, indicating that bird occurrences are not random but strongly influenced by land cover
+- There is minimal overlap between the two distributions, indicating that bird occurrences are not random but strongly influenced by land cover
 
 ## Density Analysis Together with the Land-Cover Background
 
@@ -298,7 +300,7 @@ points(occ_points, pch = 20, cex = 0.3, col = "black")
 - Several hot-spots of bird observations are visible across different habitats, consistent with the ridge analysis results
 - Urban hot-spots are found in densely built-up areas as well as in open spaces
 - Forest hot-spots occur within the forest interior, but also in urban areas with abundant green patches
-- Recognisable hot-spot where urban and forest analysis overlaps
+- Recognisable hot-spot where urban and forest analysis overlap
 
 ## Analysis of Areas with the Highest Observation Rate
 
@@ -344,10 +346,10 @@ plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "black")
 
 **Interpretation:**
 - This NDVI analysis of water remains partly inconclusive due to the small spatial extent of the water body relative to the raster resolution
-- However, the RGB true-colour imagery clearly shows that the area with a high concentration of bird observations contains a lake surrounded by   small park and green spaces
+- However, the RGB true-colour imagery clearly shows that the area with a high concentration of bird observations contains a lake surrounded by a small park and green spaces
 - Several areas are also incorrectly classified as water, while some existing water bodies are not clearly detected
-- The combination of open water, vegetation, and recreational park infrastructure likely provides favourable habitat conditions for birds,        while simultaneously attracting high numbers of human visitors
-- This overlap of suitable bird habitat and human activity offers a plausible explanation for the unusually high number of observations           recorded in this location
+- The combination of open water, vegetation, and recreational park infrastructure likely provides favourable habitat conditions for birds, while simultaneously attracting high numbers of human visitors
+- This overlap of suitable bird habitat and human activity offers a plausible explanation for the unusually high number of observations recorded in this location
 
 ## Conclusion
 
@@ -364,5 +366,5 @@ plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "black")
 2. **Observer effort bias:**
    - Areas with higher human activity (paths, urban areas, parks) are more likely to have birds observed and reported
 3. **Spatial resolution bias:**
-   - The resolution of satellite data (NDVI) might be too coarse, with pixel size larger than fine-scale habitat features
+   - The resolution of satellite data (NDVI) might be too coarse, with a pixel size larger than fine-scale habitat features
    - Small parks, water bodies, or vegetation patches might be misrepresented, affecting the classification of urban vs. natural areas
