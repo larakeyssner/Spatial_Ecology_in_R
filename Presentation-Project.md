@@ -159,20 +159,20 @@ raster_birds <- rast(dmap_bird)
 #Bird density is continuous; Bilinear interpolation computes a weighted average of nearby pixels
 raster_birds_new <- resample(raster_birds, raster_class, method = "bilinear")
 
-#Extraction of all raster cell values of the Bird density
-birds <- values(raster_birds_new)
-birds <- as.vector(birds)
+# Extract and convert to vectors
+birds <- as.vector(values(raster_birds_new))
+landcover <- as.vector(values(raster_class))
 
-#Extraction of all raster cell values of the landcover classes 
-landcover <- values(raster_class)
-landcover <- as.vector(landcover)
+#Data frame (pixel-wise) with estimated bird density in a cell and the landcover type 
+df <- data.frame(bird_density = birds, landcover = landcover)
 
-#Data frame with bird density and the landcover type 
-df_BU <- data.frame(bird_density = birds, landcover = landcover)
+#Removing the rows with NA
+df_clean <- na.omit(df)
 
 #Subset bird density values by the landcover category (urban pixel and natural pixels)
-urban_density   <- df_BU$bird_density[df_BU$landcover == 1]
-natural_density <- df_BU$bird_density[df_BU$landcover == 2]
+#Two independent samples that can be compared 
+urban_density <- df_clean$bird_density[df_clean$landcover == 1]
+natural_density <- df_clean$bird_density[df_clean$landcover == 2]
 
 #Choosing the Wilcoxon test because it doesn't assume normality and works for large samples 
 #Wilcoxon rank sum test with continuity correction
