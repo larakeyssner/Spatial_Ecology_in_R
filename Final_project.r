@@ -319,13 +319,13 @@ plot(raster_class,
 
 #Adding the bird observation points to the graph of the land-cover cluster 
 points(occ_env$long,occ_env$lat,pch = 20,
-       col = ifelse(occ_env$landcover == "Urban", "white", "red"),cex = 0.8) #Urban white if not than red (so natural)
+       col = ifelse(occ_env$landcover == "Urban", "white", "blue"),cex = 1) #Urban white if not than red (so natural)
 
 #Adding a legend to the plot 
 legend("topright", legend = c("Urban area", "Natural area", "Urban birds", "Forest birds"),
         pt.bg = c("purple4", "yellow", NA, NA),              #Background colour (only needed for squares)
         pch = c(22, 22, 1, 20),
-        col = c("black", "black", "black", "red"),
+        col = c("black", "black", "black", "blue"),
         pt.cex = c(1.5, 1.5, 0.8, 0.8),                      #Smaller symbols
         cex = 0.8,                                           #Smaller text
         y.intersp = 0.7,                                     #Tighter vertical spacing
