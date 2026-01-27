@@ -397,7 +397,7 @@ plot(density(forest_ppp), main="Density map of observations in natural areas", r
 #dev.off()
 
 #First plotting of the raster class to later integrate the kernel density 
-plot(raster_class,col = c("azure 4", "lightgrey"),legend = FALSE,main = "Density of Bird observation within the urban and natrual space",
+plot(raster_class,col = c("azure4", "lightgrey"),legend = FALSE,main = "Density of Bird observation within the urban and natrual space",
      xlab = " Longitude (DD)", ylab = "Latitude (DD)")
 
 #Adding the density contours to the plot of NDVI classification
