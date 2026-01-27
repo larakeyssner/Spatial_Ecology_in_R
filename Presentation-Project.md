@@ -200,8 +200,7 @@ occ_env <- cbind(occ.new, ndvi = occ_ndvi[, 2])
 occ_env$landcover <- ifelse(occ_env$ndvi < 0.5, "Urban", "Natural")
 
 #Plot of the vector with the categorical values of land-cover
-barplot(table(occ_env$landcover),col = c("darkgreen", "grey40"), main = "Number of Bird Observations divided by land-cover",
-        ylab = "Number of observations", ylim = c(0, 600))
+barplot(table(occ_env$landcover),col = c("darkgreen", "grey40"), main = "Number of Bird Observations divided by         land-cover", ylab = "Number of observations", ylim = c(0, 600))
 ```
 <p align="center">
 <img width="514" height="513" src = https://github.com/user-attachments/assets/beebbb64-2f29-4d2f-b148-3bbbd381d140>
@@ -220,7 +219,8 @@ points(occ_env$long, occ_env$lat, pch = 20,
 #Adding a legend to the plot 
 ```
 <p align="center">
-<img width="514" height="513" src = https://github.com/user-attachments/assets/aa553a3d-9ea4-428e-a0e5-b769a663f31e>
+<img width="514" height="513" src = https://github.com/user-attachments/assets/b6dbe780-d238-4e54-9e44-9c3fc2752b7c>
+
   
 **Interpretation:** The overlay of bird observations on the classified NDVI map clearly shows that most observations occur in natural (green) areas, with relatively fewer observations in urban (purple) areas.
 
@@ -291,8 +291,9 @@ points(occ_points, pch = 20, cex = 0.3, col = "black")
 ```
 
 <p align="center">
-<img width="514" height="513" src =https://github.com/user-attachments/assets/694b9272-91ee-4184-ab94-36f2f9b67fb0>
+<img width="514" height="513" src =https://github.com/user-attachments/assets/c226981b-ef33-4340-bf35-d1707630ab97>
 
+  
 **Interpretation:**
 - Several hot-spots of bird observations are visible across different habitats, consistent with the ridge analysis results
 - Urban hot-spots are found in densely built-up areas as well as in open spaces
