@@ -349,8 +349,8 @@ plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "black")
 
 **Interpretation:**
 - This NDVI analysis of water remains partly inconclusive due to the small spatial extent of the water body relative to the raster resolution
-- However, the RGB true-colour imagery clearly shows that the area with a high concentration of bird observations contains a lake surrounded by a small park and green spaces
 - Several areas are also incorrectly classified as water, while some existing water bodies are not clearly detected
+- However, the RGB true-colour imagery clearly shows that the area with a high concentration of bird observations contains a lake surrounded by a small park and green spaces
 - The combination of open water, vegetation, and recreational park infrastructure likely provides favourable habitat conditions for birds, while simultaneously attracting high numbers of human visitors
 - This overlap of suitable bird habitat and human activity offers a plausible explanation for the unusually high number of observations recorded in this location
 
