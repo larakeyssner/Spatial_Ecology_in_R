@@ -302,7 +302,7 @@ occ_env$landcover <- ifelse(occ_env$ndvi < 0.5, "Urban", "Natural")
 #Plot of the vector with the categorical values of land-cover
 barplot(table(occ_env$landcover),           #Counts how often category occurs 
         col = c("darkgreen", "grey40"),
-        main = "Number of Bird Observations divied by land-cover",
+        main = "Number of Bird Observations divided by land-cover",
         ylab = "Number of observations", ylim = c(0, 600))
 
 #Result: Bird observations are more frequent in natural areas
