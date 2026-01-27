@@ -99,7 +99,8 @@ plot(dm_norm, main = "Normalized Density-Map of Bird Observations", col = cl,
      ribargs = list(las = 1, cex.axis = 0.8))
 plot(occ_points, add = TRUE, pch = 20, cex = 0.4, col = "white") 
 ```
-![Dmap1](https://github.com/user-attachments/assets/43a569aa-5b56-485d-94a4-23f0a7c9322e)
+<p align="center">
+<img width="514" height="513"!alt="CampoImpRGB"https://github.com/user-attachments/assets/43a569aa-5b56-485d-94a4-23f0a7c9322e>
 
 
 **Interpretation:** Visualising bird observation density: first as raw density, then normalised (0–1) for easier interpretation. The normalised scale is more intuitive to understand and read. The density maps show clear hotspots of bird observations, particularly in certain areas of the park.
