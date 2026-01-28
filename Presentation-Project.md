@@ -16,6 +16,8 @@ The aim was to choose a study area with around 50% natural areas and 50% urban a
 
 Area of 5km x 5km = 25km² with the park in the center 
 
+<img width="300" height="300" alt="Park bild " src="https://github.com/user-attachments/assets/705fe550-7ffe-4924-95ff-8f021dd8844e" />
+
 ## The Ecological Data
 
 Bird observations from the GBIF database collected in the year 2019
