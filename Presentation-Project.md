@@ -6,7 +6,7 @@ Do bird observations differ in density between urban and natural land-cover type
 Initially assumption is that bird observations would be more frequent in urbanised areas due to higher human presence in these areas, which increases the likelihood of birds being seen and recorded
 
 ## The Study Area
-
+<p align="center">
 <img width="400" height="400" alt="Overview" src="https://github.com/user-attachments/assets/ddb29352-d4bb-4eca-93e4-a3e7eb65d080" />
 
 The aim was to choose a study area with around 50% natural areas and 50% urban areas
