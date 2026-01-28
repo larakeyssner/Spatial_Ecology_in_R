@@ -81,11 +81,11 @@ install.packages("ggridges")
 install.packages("ggplot2")
 
 #Adding the previously installed packages to the library so they can be used 
-library(viridis) # Colour palette easier to read by those with colourblindness
-library(terra) #Needed for rastering (rast) as well as classifying (classify) and respampling
-library(spatstat)# Spatial windows and point patterns (ppp, owin), Density maps
-library(ggridges) #Ridge density plots 
-library(ggplot2) #for making high-quality plots with the possibility of adding multiple features
+library(viridis)     #Colour palette easier to read by those with colourblindness
+library(terra)       #Needed for rastering (rast), classifying (classify), respampling and RGB plotting
+library(spatstat)    #Spatial windows and point patterns (ppp, owin), Density maps
+library(ggridges)    #Ridge density plots 
+library(ggplot2)     #for making high-quality plots with the possibility of adding multiple features
 
 
 #####################################################
