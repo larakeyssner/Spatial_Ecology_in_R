@@ -7,6 +7,8 @@ Initially assumption is that bird observations would be more frequent in urbanis
 
 ## The Study Area
 
+<img width="400" height="400" alt="Overview" src="https://github.com/user-attachments/assets/ddb29352-d4bb-4eca-93e4-a3e7eb65d080" />
+
 The aim was to choose a study area with around 50% natural areas and 50% urban areas
 
 **Why the City park Eilenriede in Hanover:**
