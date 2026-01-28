@@ -7,7 +7,7 @@
   #and how is this associated with vegetation cover (NDVI)?
 
 #Assumption: 
-  #Initially assumption is that bird observations would be more frequent in urbanised areas
+  #Initially assumption is that bird observations are more frequent in urbanised areas
   #This expectation is based on the idea that higher human presence in these areas increases the likelihood of birds being seen and recorded
   #Since the data comes from human observations (GBIF), areas with more visitors are more likely to have observations uploaded
 
@@ -18,7 +18,7 @@
 
 #The aim was to choose a study area with around 50% natural areas and 50% urban areas 
 #Why the City park Eilenriede in Hanover:
-  #Because it is one of the biggest forests included in a city in Europe 
+  #It is one of the biggest forests in a Euopean city
   #Provides a gradient from highly vegetated areas to areas with human influence
   #Easily accessible to humans, leading to rich citizen science data (e.g., GBIF observations)
 
@@ -44,9 +44,9 @@
   #Data about bird observations in the study area 
   #Human observations 
   #Geometry: POLYGON((9.74453 52.39625,9.74453 52.35133,9.81817 52.35133,9.81817 52.39625,9.74453 52.39625))
-  #Has coordinates: true, has geopspatial issues: false 
-  #Species analysed (Scientific name): Aves (898 occurrences)
-  #Date between the start of 2019 and the end of 2019
+  #Has coordinates: true and has geopspatial issues: false 
+  #Species analysed: Aves (898 occurrences)
+  #Between the start of 2019 and the end of 2019
   #GBIF.org (21 January 2026) GBIF Occurrence Download
   #https://doi.org/10.15468/dl.8zukfu
 
@@ -59,8 +59,8 @@
   #Website: https://browser.dataspace.copernicus.eu/
   #Geometry: POLYGON((9.74453 52.39625,9.74453 52.35133,9.81817 52.35133,9.81817 52.39625,9.74453 52.39625))
   #Download options: Labels off, Captions off, image resolution HIGH (820x819px), TIFF (32-bit float)
-  #Date in 2019 without clouds to have a clear image (date chosen 2019-06-29)
-  #Layers: Visualised: True colour
+  #Date in 2019 without clouds to have a clear image (date chosen: 2019-06-29)
+  #Layers - Visualised: True colour
   #Layers Raw: B04 and B08
   #Coordinate system: WGS 84 (EPSG:4326)
   #Resolution: lat.: 0.0000548 deg/px (0.2sec/px); long.: 0.0000898 deg/px (0.3sec/px)
@@ -94,7 +94,7 @@ library(ggplot2)     #for making high-quality plots with the possibility of addi
 
 occ <- read.table("occurrence.txt", header=TRUE, sep="\t", fill = TRUE)
 #Using \t to have tabs as a separation between values 
-#fill = TRUE adds NA  into empty fields to make the table even 
+#fill = TRUE adds NA into empty fields to make the table even 
 
 #Check if there is a column for latitude and longitude --> result TRUE
 "decimalLatitude" %in% names(occ)
@@ -123,7 +123,6 @@ occ.clean2 <- occ.clean[occ.clean[[98]] >= 52.35133 & occ.clean[[98]] <= 52.3962
 #Creating a data frame with only the spatial information and the occurrences 
 occ.new <- data.frame(lat = occ.clean2[[98]], long = occ.clean2[[99]])
 
-
 #First visualization of the data to detect obvious errors 
 plot(occ.new$long, occ.new$lat, main = "Map of Bird Observation Points", xlab = "Longitude (DD)", ylab = "Latitude (DD)")
 
@@ -146,7 +145,6 @@ occ_points <- ppp(x = occ.new$long, y = occ.new$lat, window = win)
 
 #Smoothing point location to develop a density map
 dmap_bird <- density(occ_points)
-
 
 #Defining the colour palette for graphs using Viridis, which is easily readable for colorblind individuals
 #The number 100 specifies that the palette will contain 100 distinct colour levels
@@ -216,11 +214,8 @@ ndvi_class <- matrix(c(-1.0, 0.5, 1,              #Cluster 1
 raster_class <- classify(ndvi, ndvi_class)
 
 # Plotting the clustered raster 
-
 plot(raster_class, main = "Clustered NDVI-Map of Urban (1) and Natural (2) Areas", col = cl,
      xlab = " Longitude (DD)", ylab = "Latitude (DD)")
-
-
 
 ###########################
 ###Statistical analysis ###
@@ -234,7 +229,7 @@ raster_birds <- rast(dmap_bird)
 #Bird density is continuous; Bilinear interpolation computes a weighted average of nearby pixels
 raster_birds_new <- resample(raster_birds,raster_class,method = "bilinear")
 
-# Extract and convert to vectors
+#Extract and convert to vectors
 birds <- as.vector(values(raster_birds_new))
 landcover <- as.vector(values(raster_class))
 
@@ -272,9 +267,7 @@ wilcox.test(urban_density, natural_density)
   #W value (rank of the sums): large W usually with large samples, and if ranks are strongly separated 
   #p-value is extremely significant so H0 can be rejected  and H1 is considered 
   #Bird observation density differs significantly between urban and natural land-cover classes
-  #Land cover is strongly associated with bird density patterns.
-
-
+  #Land cover is strongly associated with bird density patterns
 
 ################################################################
 ### Association of bird observation and urban/ natural areas ###
@@ -283,7 +276,6 @@ wilcox.test(urban_density, natural_density)
 #Convert the cleaned data frame with observations and coordinates (occ.new) into a vector
 #Use long and lat as the coordinates, and the reference system is WGS84
 occ_vect <- vect(occ.new, geom = c("long", "lat"), crs = "EPSG:4326")
-
 
 #Extract NDVI values at bird locations, which allows spatial overlay points and a  raster layer
 #Extract raster cell value of ndvi of each occurrence (occ_vect) --> points-based extraction 
@@ -295,7 +287,6 @@ occ_env <- cbind(occ.new, ndvi = occ_ndvi [,2]) #data is placed into rows and tw
 #Label classes --> new categorical variable of land-cover, either threshold of 0.5
 occ_env$landcover <- ifelse(occ_env$ndvi < 0.5, "Urban", "Natural")
 
-
 #Plot of the vector with the categorical values of land-cover
 barplot(table(occ_env$landcover),           #Counts how often category occurs 
         col = c("darkgreen", "grey40"),
@@ -304,7 +295,6 @@ barplot(table(occ_env$landcover),           #Counts how often category occurs
 
 #Result: Bird observations are more frequent in natural areas
   #with ~350 observations in urban areas and ~550 in forested/natural areas
-
 
 #Plot of the classified NDVI raster
 plot(raster_class,
@@ -330,7 +320,6 @@ legend("topright", legend = c("Urban area", "Natural area", "Urban birds", "Fore
         bg = "white",                                        #White background
         box.col = "grey50")                                  #Subtle border
 
-
 #Next step: to analyse what kind of land-cover is associated with more or fewer bird observations?
 
 ######################
@@ -352,7 +341,6 @@ ggplot(occ_env,aes(x = ndvi,y = landcover,fill = landcover)
     y = "Type of land-cover",
 )+ theme(legend.position = "none")                          #Removing the legend
 
-
 #Interpretation:
   #The NDVI distribution shows multiple peaks, indicating the presence of different habitat types within each land-cover class
   #For urban areas:
@@ -369,7 +357,6 @@ ggplot(occ_env,aes(x = ndvi,y = landcover,fill = landcover)
 #Further analysis could explore why certain areas have higher observations
 #Potential drivers include dense vegetation creating forest hot-spots and urban features like parks or water bodies, attracting birds in city areas
 
-
 ################################################################
 ### Density analysis together with the land-cover background ### 
 ################################################################
@@ -377,7 +364,6 @@ ggplot(occ_env,aes(x = ndvi,y = landcover,fill = landcover)
 #Subset the point pattern by land cover class 
 urban_ppp  <- occ_points[occ_env$landcover == "Urban"]
 forest_ppp <- occ_points[occ_env$landcover == "Natural"]
-
 
 #Kernel density surface for each subset
 dens_urban  <- density(urban_ppp)
@@ -398,7 +384,6 @@ plot(raster_class,col = c("azure4", "lightgrey"),legend = FALSE,main = "Density 
      xlab = " Longitude (DD)", ylab = "Latitude (DD)")
 
 #Adding the density contours to the plot of NDVI classification
-
 #Urban – core hot-spot only (the top 10% of the density value (v=value))
 #Add= TRUE so the raster below is not removed 
 contour(dens_urban,add = TRUE,col = "red",lwd = 2,levels = quantile(dens_urban$v, probs = 0.9))
@@ -429,7 +414,6 @@ legend("topright",
         bg = "white",                                       #White background
         box.col = "grey50")                                 #Subtle border
 
-
 #Interpretation:
   #Several hot-spots of bird observations are visible across different habitats, consistent with the ridge analysis results
   #Urban hot-spots are found in densely built-up areas as well as in open spaces, such as parks
@@ -437,13 +421,11 @@ legend("topright",
   # Recognisable hot-spot where urban and forest analysis overlaps 
 #Further analysis is needed to understand the factors driving high bird activity in this mixed landscape
 
-
 #######################################################################################
 ### Analysis of the areas with the highest observation rate (both natural and urban ###
 #######################################################################################
 
 #First step: visual analysis of the area loading the true colour satellite image  
-
 #Loading the true colour satellite image as a raster
 truecolor <- rast("Eilenriede_True.tiff")
 
@@ -478,13 +460,11 @@ legend( "topright", inset = c(0.03, 0),
 #Adding a title on top of the plot because in plotRGB, the function main is not run 
 title("True-color satellite image of Eilenriede", outer = TRUE, cex = 1)
 
-
 #To stop the formation of a panel in the next plots 
 #dev.off()
 
 #Area with many observations appears to be a lake 
 #Next step: verify this observation using NDVI analysis
-
 
 #NDVI raster is already named as 'ndvi'
 #Create a water raster so the original NDVI data set remains unchanged 
@@ -495,7 +475,6 @@ water_raster <- ndvi
   #In small lakes, the outer vegetation can become a problem (Can change the NDVI value and make it no longer distinguishable as a water body)
   #Also, classification error due to highly impervious surfaces that are wrongly identified as water bodies 
 
-
 #Threshold-based on classification: everything slightly negative or more is classified as water 
 water_raster[water_raster > -0.009] <- NA   #Non-water (now NA)
 water_raster[water_raster <= -0.009] <- 1   #Water
@@ -504,7 +483,6 @@ water_raster[water_raster <= -0.009] <- 1   #Water
 background_raster <- ndvi
 background_raster[] <- 1  # all cells = 1 to have a clear background 
 background_raster[water_raster == 1] <- NA  #removes the cells that are classified water 
-
 
 #Plotting grey background first
 plot(background_raster, col = "grey80", legend = FALSE, main = "NDVI based analyis of water bodies",
@@ -516,7 +494,6 @@ plot(water_raster, col = "blue", add = TRUE, legend = FALSE)
 #Adding a legend 
 legend("topright", legend = "Water", fill = "blue", cex = 0.7,  
        bg = "white", box.col = "grey50")
-
 
 #Same plot but with the addition of the points of occurrence
 plot(background_raster, col = "grey80", legend = FALSE, main = "Analysis of bird observations and water bodies (NDVI based)",
@@ -540,7 +517,6 @@ legend("topright",
        x.intersp = 0.5,                  #Tighter horizontal spacing
        bg = "white",                     #White background
        box.col = "grey50")               #Subtle border
-
 
 #Interpretation:
   #This NDVI analysis of water remains partly inconclusive due to the small spatial extent of the water body relative to the raster resolution
